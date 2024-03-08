@@ -1,6 +1,16 @@
-import { useEffect } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useEffect, useState } from "react";
+
+import { IoCheckmark } from "react-icons/io5";
 
 const SocialSignOn = () => {
+	const [userData, setUserData] = useState<any>({
+		email: "",
+		id: "",
+		image: "",
+		name: "",
+		provider: "",
+	});
 	const urls = {
 		google: "/google",
 		twitter: "/twitter",
@@ -19,7 +29,7 @@ const SocialSignOn = () => {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		const getData = (e: any) => {
 			if (e.origin === "http://localhost:5173") {
-				console.log(e.data);
+				setUserData(e.data);
 			}
 		};
 		const channel = new BroadcastChannel("auth");
@@ -32,18 +42,47 @@ const SocialSignOn = () => {
 
 	return (
 		<main className="w-full h-screen bg-slate-200 flex items-center justify-center">
-			<div className="w-[460px] h-[70vh] rounded-[5px] flex items-center flex-col p-10 shadow-2xl bg-white">
-				<h3 className="font-black text-2xl mb-24">Social Sign Ons</h3>
+			<div className="w-[460px] h-auto min-h-[70vh] rounded-[5px] flex items-center flex-col p-10 shadow-2xl bg-white">
+				<h3 className="font-black text-2xl mb-4">Social Sign Ons</h3>
 
-				<button className="w-[250px] bg-green-500 text-white mb-4 rounded-[5px] py-2" onClick={() => openWindow(urls.google)}>
-					Sign In With Google
-				</button>
-				<button className="w-[250px] bg-blue-400 text-white mb-4 rounded-[5px] py-2" onClick={() => openWindow(urls?.twitter as string)}>
-					Sign In With Twitter
-				</button>
-				<button className="w-[250px] bg-black text-white mb-4 rounded-[5px] py-2" onClick={() => openWindow(urls?.github as string)}>
-					Sign In With Github
-				</button>
+				{!userData?.id && (
+					<div className="flex flex-col items-center justify-center mt-12">
+						<button className="w-[250px] bg-green-500 text-white mb-4 rounded-[5px] py-2" onClick={() => openWindow(urls.google)}>
+							Sign In With Google
+						</button>
+						<button className="w-[250px] bg-blue-400 text-white mb-4 rounded-[5px] py-2" onClick={() => openWindow(urls?.twitter as string)}>
+							Sign In With Twitter
+						</button>
+						<button className="w-[250px] bg-black text-white mb-4 rounded-[5px] py-2" onClick={() => openWindow(urls?.github as string)}>
+							Sign In With Github
+						</button>
+					</div>
+				)}
+				{userData?.id && (
+					<>
+						<div className="w-24 h-24 flex items-center justify-center bg-green-200 rounded-full mb-10">
+							<IoCheckmark className="text-4xl" />
+						</div>
+						<p className="font-bold text-xl mb-3">Log in was successful</p>
+						<p>Logged In as </p>
+						<p>
+							<span className="font-bold mr-[2px]">Id:</span> {userData?.id}
+						</p>
+						<p>
+							<span className="font-bold mr-[2px]">Provider:</span> {userData?.provider}
+						</p>
+						<p>
+							<span className="font-bold mr-[2px]">Name:</span>
+							{userData?.name}
+						</p>
+						{userData?.email && (
+							<p>
+								<span className="font-bold mr-[2px]">Email:</span>
+								{userData?.email}
+							</p>
+						)}
+					</>
+				)}
 			</div>
 		</main>
 	);
