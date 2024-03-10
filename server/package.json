@@ -23,7 +23,8 @@
 		"passport": "^0.7.0",
 		"passport-github": "^1.1.0",
 		"passport-google-oauth20": "^2.0.0",
-		"passport-twitter": "^1.0.4"
+		"passport-twitter": "^1.0.4",
+		"stripe": "^14.20.0"
 	},
 	"devDependencies": {
 		"dotenv": "^16.4.5",

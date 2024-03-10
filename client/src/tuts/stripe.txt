@@ -1,0 +1,19 @@
+1. Register an account on stripe
+2. Get api keys from stripe
+    - After login
+    - Navigate to developers
+    - Api keys(copy and paste in .envs )
+3. Install stripe for backend
+4. For one time payment , 
+    - create a checkout session on the backend and direct user to it on the frontend 
+    - Add the session.id so you can use that to validate payment
+    - After succesful checkout, on the success page , make a request to validate the payment using the session.id
+    - Do verification and update as needed
+5. For subscriptions
+    - Create a customer for the user on signup
+    - Create your products to be added to the billing portal on stripe.(https://dashboard.stripe.com/test/products)
+    - Setup a billing portal (https://dashboard.stripe.com/test/settings/billing/portal). Add products on there
+    - Copy the product ids and store in .env
+    - On the frontend , get the plans 
+
+
