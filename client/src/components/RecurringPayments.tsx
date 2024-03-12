@@ -23,9 +23,12 @@ const RecurringPayments = ({ setType }: { setType: React.Dispatch<React.SetState
 			} catch (e) {
 				setLoading(false);
 				toast.error("An error occurred while fetching details. Please reload page", { autoClose: 1000 });
+				setTimeout(() => {
+					setType("");
+				}, 1500);
 			}
 		})();
-	}, []);
+	}, [setType]);
 
 	const createBillingPortal = async (id: string) => {
 		try {
@@ -39,7 +42,7 @@ const RecurringPayments = ({ setType }: { setType: React.Dispatch<React.SetState
 	return (
 		<div className=" w-full flex items-center flex-col">
 			<h3 className="text-xl font-medium mb-5">Recurring Payments</h3>
-			{!loading && (
+			{!loading && user?.plan && (
 				<>
 					<p>Click on a plan to select it</p>
 					<div className="w-full mt-7 flex items-center justify-between gap-2">
